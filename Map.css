@@ -1,0 +1,94 @@
+/* MAP SECTION */
+
+.logo-container-map {
+  width: 70%;
+  max-width: 1000px;
+  height: 600px;
+  background: #eff6ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 30px;
+  border-radius: 12px;
+  backdrop-filter: blur(40px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+.logo-container-map iframe {
+  width: 85%;
+  height: 85%;
+  border-radius: 12px;
+  display: block;
+}
+
+
+.logo-container-map:hover {
+  box-shadow: 0 8px 28px rgba(46, 98, 177, 0.4);
+}
+
+.map-section {
+  text-align: center;
+  margin-bottom: 80px;
+  padding: 0 40px;
+}
+
+.map-section h2 {
+ margin-bottom: 40px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 800;
+  font-size: 2.3rem;
+  text-transform: uppercase;
+  background: linear-gradient(45deg, #0b2c5a, #2e62b1, #c9def7, #ffffff);
+  background-size: 300% 300%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  user-select: none;
+}
+
+
+/* Button Lihat Map */
+.btn-view-map {
+  background-color: var(--blue-medium);
+  color: var(--white);
+  font-weight: 700;
+  font-size: 1.2rem;
+  padding: 14px 36px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(46, 98, 177, 0.6);
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  user-select: none;
+}
+
+.btn-view-map:hover {
+  background-color: var(--blue-light);
+  color: var(--blue-dark);
+  transform: scale(1.05);
+  box-shadow: 0 8px 24px rgba(46, 98, 177, 0.8);
+  outline: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .logo-container-map {
+    width: 90%;
+    height: 350px;
+  }
+
+  .map-section h2 {
+    font-size: 2.2rem;
+  }
+
+  .map-section h3 {
+    font-size: 1.3rem;
+  }
+
+  .btn-view-map {
+    font-size: 1rem;
+    padding: 12px 28px;
+  }
+}

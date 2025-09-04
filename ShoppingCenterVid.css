@@ -1,0 +1,14 @@
+.logo-container-shop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo-shop {
+  width: 100%; /* Memastikan video memenuhi lebar container */
+  max-width: 1600px; /* Batas maksimum ukuran video */
+  height: auto; /* Menjaga rasio aspek video */
+  margin: 0 auto 0; /* Pusatkan video secara horizontal dan beri jarak bawah */
+  display: block;
+}
+

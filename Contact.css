@@ -1,0 +1,43 @@
+
+.contact {
+  margin-top: 0px; /* Tambahkan jarak dari bagian sebelumnya */
+  background: #c9def7; /* Variasi warna dengan transparansi */
+  padding: 50px 20px;
+  text-align: center;
+  border-radius: 1px; /* Efek rounded */
+  backdrop-filter: blur(50px); /* Blur latar belakang untuk efek kaca */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Bayangan halus */
+}
+
+.contact h2 {
+  margin-bottom: 20px;
+  background:linear-gradient(45deg, #0b2c5a, #2e62b1, #c9def7, #ffffff); 
+  background-size: 300%;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-animation 2s linear infinite ;
+  animation: 2s ease-in-out;
+}
+
+.contact ul {
+  list-style: none;
+  padding: 0;
+}
+
+.contact ul li {
+  margin: 10px 0;
+}
+
+.contact ul li a {
+  text-decoration: none;
+  color: #0b2c5a;
+}
+
+.contact ul li a:hover {
+  text-decoration: none;
+  color: #2e62b1;
+}
+
+html {
+  scroll-behavior: smooth;
+}

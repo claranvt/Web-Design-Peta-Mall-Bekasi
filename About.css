@@ -1,0 +1,37 @@
+/* ABOUT SECTION */
+.about {
+  text-align: center;
+  padding: 60px 20px;
+  max-width: 900px;
+  margin: 0 auto 80px;
+}
+
+
+.about h2 {
+  margin-bottom: 20px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 800;
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  background: linear-gradient(45deg, #0b2c5a, #2e62b1, #c9def7, #ffffff);
+  background-size: 300% 300%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-animation 3s ease-in-out infinite;
+  transition: transform 0.3s ease;
+  user-select: none;
+}
+
+.about h2:hover {
+  transform: scale(1.05);
+  animation: gradient-animation 1.5s linear infinite;
+}
+
+.about p {
+  font-size: 1.1rem;
+  max-width: 700px;
+  margin: 0 auto 1.2em;
+  line-height: 1.7;
+  color: var(--blue-dark);
+}

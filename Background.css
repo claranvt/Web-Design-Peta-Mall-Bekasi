@@ -1,0 +1,128 @@
+.title {
+  display: flex;
+  justify-content: center;
+  padding: 0; /* hapus padding atas & bawah */
+  margin: 0;  /* margin atas dan bawah 0 */
+  background-color: var(--gray-light);
+  position: relative; /* supaya hero-logo absolute berada di dalamnya */
+}
+
+.title-content {
+  width: 100%;
+  max-width: 100%;
+  height: 800px; /* tinggi tetap */
+  background-image: url(../Image/Home.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: var(--white);
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* overlay supaya teks terlihat */
+.title-content::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(11, 44, 90, 0.4);
+  z-index: 0; /* di bawah teks */
+}
+
+
+.gradient-text {
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-size: 3rem; /* Sesuaikan ukuran font */
+  margin-bottom: 20px;
+  font-weight: 800;
+  text-transform: uppercase;
+  background: linear-gradient(45deg,#0b2c5a, #2e62b1, #c9def7, #ffffff);
+  animation: gradient-animation 2s infinite ease-in-out;
+  background-size: 300%;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  
+}
+
+.gradient-text:hover {
+  background: linear-gradient( 45deg #0b2c5a, #2e62b1, #c9def7, #ffffff);
+  background-size: 300%;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-animation 2s linear infinite ;
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Explore Button */
+.title-content button.explore {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  font-size: 1.3rem;
+  border-radius: 8px;
+  background: var(--blue-medium);
+  color: var(--white);
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(46, 98, 177, 0.6);
+  border: none;
+  cursor: pointer;
+  transition: background-color var(--transition-speed), transform 0.2s ease, box-shadow 0.3s ease;
+  position: relative;
+  z-index: 1;
+  user-select: none;
+}
+
+.title-content button.explore:hover,
+.title-content button.explore:focus {
+  background-color: var(--blue-light);
+  color: var(--blue-dark);
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(46, 98, 177, 0.8);
+  outline: none;
+}
+
+/* Hero Logos */
+.hero-logo {
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  display: flex;
+  gap: 1.5em;
+  align-items: center;
+  z-index: 3;
+  user-select: none;
+}
+
+.hero-logo img {
+  height: 40px;
+  width: auto;
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.3));
+  transition: transform 0.3s ease;
+}
+
+.hero-logo img:hover {
+  transform: scale(1.1);
+}
