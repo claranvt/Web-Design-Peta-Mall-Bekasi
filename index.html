@@ -1,0 +1,1221 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet.photon.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/L.Control.Layers.Tree.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet.photon.js"></script>
+        <script src="data/BatasAdministratif_PROVJawaBarat_1.js"></script>
+        <script src="data/BatasAdministratif_Bekasi_2.js"></script>
+        <script src="data/LokasiMallBekasi_3.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:false, maxZoom:28, minZoom:1
+        }).fitBounds([[-6.751896629540477,106.3884570024379],[-5.835479406435766,107.76036918182344]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        // remove popup's row if "visible-with-data"
+        function removeEmptyRowsFromPopupContent(content, feature) {
+         var tempDiv = document.createElement('div');
+         tempDiv.innerHTML = content;
+         var rows = tempDiv.querySelectorAll('tr');
+         for (var i = 0; i < rows.length; i++) {
+             var td = rows[i].querySelector('td.visible-with-data');
+             var key = td ? td.id : '';
+             if (td && td.classList.contains('visible-with-data') && feature.properties[key] == null) {
+                 rows[i].parentNode.removeChild(rows[i]);
+             }
+         }
+         return tempDiv.innerHTML;
+        }
+        // add class to format popup if it contains media
+		function addClassToPopupIfMedia(content, popup) {
+			var tempDiv = document.createElement('div');
+			tempDiv.innerHTML = content;
+			if (tempDiv.querySelector('td img')) {
+				popup._contentNode.classList.add('media');
+					// Delay to force the redraw
+					setTimeout(function() {
+						popup.update();
+					}, 10);
+			} else {
+				popup._contentNode.classList.remove('media');
+			}
+		}
+        var zoomControl = L.control.zoom({
+            position: 'topleft'
+        }).addTo(map);
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_GoogleSatellite_0');
+        map.getPane('pane_GoogleSatellite_0').style.zIndex = 400;
+        var layer_GoogleSatellite_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+            pane: 'pane_GoogleSatellite_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_GoogleSatellite_0;
+        map.addLayer(layer_GoogleSatellite_0);
+        function pop_BatasAdministratif_PROVJawaBarat_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FID'] !== null ? autolinker.link(String(feature.properties['FID']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PROVNO'] !== null ? autolinker.link(String(feature.properties['PROVNO']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">KABKOTNO</th>\
+                        <td>' + (feature.properties['KABKOTNO'] !== null ? autolinker.link(String(feature.properties['KABKOTNO']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KECNO'] !== null ? autolinker.link(String(feature.properties['KECNO']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DESANO'] !== null ? autolinker.link(String(feature.properties['DESANO']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PROVINSI'] !== null ? autolinker.link(String(feature.properties['PROVINSI']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KABKOT'] !== null ? autolinker.link(String(feature.properties['KABKOT']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KECAMATAN'] !== null ? autolinker.link(String(feature.properties['KECAMATAN']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DESA'] !== null ? autolinker.link(String(feature.properties['DESA']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['IDDESA'] !== null ? autolinker.link(String(feature.properties['IDDESA']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TAHUN'] !== null ? autolinker.link(String(feature.properties['TAHUN']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SUMBER'] !== null ? autolinker.link(String(feature.properties['SUMBER']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DESKEL unt'] !== null ? autolinker.link(String(feature.properties['DESKEL unt']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DESKEL u_1'] !== null ? autolinker.link(String(feature.properties['DESKEL u_1']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DESKEL u_2'] !== null ? autolinker.link(String(feature.properties['DESKEL u_2']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DESKEL u_3'] !== null ? autolinker.link(String(feature.properties['DESKEL u_3']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DESKEL u_4'] !== null ? autolinker.link(String(feature.properties['DESKEL u_4']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DESKEL u_5'] !== null ? autolinker.link(String(feature.properties['DESKEL u_5']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DESKEL u_6'] !== null ? autolinker.link(String(feature.properties['DESKEL u_6']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DESKEL u_7'] !== null ? autolinker.link(String(feature.properties['DESKEL u_7']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DESKEL u_8'] !== null ? autolinker.link(String(feature.properties['DESKEL u_8']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_BatasAdministratif_PROVJawaBarat_1_0(feature) {
+            switch(String(feature.properties['KABKOT'])) {
+                case 'BANDUNG':
+                    return {
+                pane: 'pane_BatasAdministratif_PROVJawaBarat_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(68,1,84,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'BANDUNG BARAT':
+                    return {
+                pane: 'pane_BatasAdministratif_PROVJawaBarat_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(71,18,101,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'BANJAR':
+                    return {
+                pane: 'pane_BatasAdministratif_PROVJawaBarat_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(72,33,115,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'BEKASI':
+                    return {
+                pane: 'pane_BatasAdministratif_PROVJawaBarat_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(70,48,126,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'BOGOR':
+                    return {
+                pane: 'pane_BatasAdministratif_PROVJawaBarat_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(66,62,133,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'CIAMIS':
+                    return {
+                pane: 'pane_BatasAdministratif_PROVJawaBarat_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(62,76,138,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'CIANJUR':
+                    return {
+                pane: 'pane_BatasAdministratif_PROVJawaBarat_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(56,88,140,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'CIMAHI':
+                    return {
+                pane: 'pane_BatasAdministratif_PROVJawaBarat_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(51,100,141,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'CIREBON':
+                    return {
+                pane: 'pane_BatasAdministratif_PROVJawaBarat_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(45,111,142,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'DEPOK':
+                    return {
+                pane: 'pane_BatasAdministratif_PROVJawaBarat_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(41,122,142,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'GARUT':
+                    return {
+                pane: 'pane_BatasAdministratif_PROVJawaBarat_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(37,133,142,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'INDRAMAYU':
+                    return {
+                pane: 'pane_BatasAdministratif_PROVJawaBarat_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(33,144,141,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'KARAWANG':
+                    return {
+                pane: 'pane_BatasAdministratif_PROVJawaBarat_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(30,155,137,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'KUNINGAN':
+                    return {
+                pane: 'pane_BatasAdministratif_PROVJawaBarat_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(33,166,133,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'MAJALENGKA':
+                    return {
+                pane: 'pane_BatasAdministratif_PROVJawaBarat_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(43,176,126,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'PANGANDARAN':
+                    return {
+                pane: 'pane_BatasAdministratif_PROVJawaBarat_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(59,187,117,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'PURWAKARTA':
+                    return {
+                pane: 'pane_BatasAdministratif_PROVJawaBarat_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(81,196,105,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'SUBANG':
+                    return {
+                pane: 'pane_BatasAdministratif_PROVJawaBarat_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(105,205,91,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'SUKABUMI':
+                    return {
+                pane: 'pane_BatasAdministratif_PROVJawaBarat_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(133,212,74,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'SUMEDANG':
+                    return {
+                pane: 'pane_BatasAdministratif_PROVJawaBarat_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(163,218,55,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'TASIKMALAYA':
+                    return {
+                pane: 'pane_BatasAdministratif_PROVJawaBarat_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(194,224,35,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'WADUK CIRATA':
+                    return {
+                pane: 'pane_BatasAdministratif_PROVJawaBarat_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(225,227,25,1.0)',
+                interactive: true,
+            }
+                    break;
+                default:
+                    return {
+                pane: 'pane_BatasAdministratif_PROVJawaBarat_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(253,231,37,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_BatasAdministratif_PROVJawaBarat_1');
+        map.getPane('pane_BatasAdministratif_PROVJawaBarat_1').style.zIndex = 401;
+        map.getPane('pane_BatasAdministratif_PROVJawaBarat_1').style['mix-blend-mode'] = 'normal';
+        var layer_BatasAdministratif_PROVJawaBarat_1 = new L.geoJson(json_BatasAdministratif_PROVJawaBarat_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_BatasAdministratif_PROVJawaBarat_1',
+            layerName: 'layer_BatasAdministratif_PROVJawaBarat_1',
+            pane: 'pane_BatasAdministratif_PROVJawaBarat_1',
+            onEachFeature: pop_BatasAdministratif_PROVJawaBarat_1,
+            style: style_BatasAdministratif_PROVJawaBarat_1_0,
+        });
+        bounds_group.addLayer(layer_BatasAdministratif_PROVJawaBarat_1);
+        map.addLayer(layer_BatasAdministratif_PROVJawaBarat_1);
+        function pop_BatasAdministratif_Bekasi_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FID'] !== null ? autolinker.link(String(feature.properties['FID']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PROVNO'] !== null ? autolinker.link(String(feature.properties['PROVNO']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KABKOTNO'] !== null ? autolinker.link(String(feature.properties['KABKOTNO']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KECNO'] !== null ? autolinker.link(String(feature.properties['KECNO']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DESANO'] !== null ? autolinker.link(String(feature.properties['DESANO']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PROVINSI'] !== null ? autolinker.link(String(feature.properties['PROVINSI']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KABKOT'] !== null ? autolinker.link(String(feature.properties['KABKOT']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">KECAMATAN</th>\
+                        <td>' + (feature.properties['KECAMATAN'] !== null ? autolinker.link(String(feature.properties['KECAMATAN']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DESA'] !== null ? autolinker.link(String(feature.properties['DESA']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['IDDESA'] !== null ? autolinker.link(String(feature.properties['IDDESA']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TAHUN'] !== null ? autolinker.link(String(feature.properties['TAHUN']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SUMBER'] !== null ? autolinker.link(String(feature.properties['SUMBER']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DESKEL unt'] !== null ? autolinker.link(String(feature.properties['DESKEL unt']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DESKEL u_1'] !== null ? autolinker.link(String(feature.properties['DESKEL u_1']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DESKEL u_2'] !== null ? autolinker.link(String(feature.properties['DESKEL u_2']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DESKEL u_3'] !== null ? autolinker.link(String(feature.properties['DESKEL u_3']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DESKEL u_4'] !== null ? autolinker.link(String(feature.properties['DESKEL u_4']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DESKEL u_5'] !== null ? autolinker.link(String(feature.properties['DESKEL u_5']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DESKEL u_6'] !== null ? autolinker.link(String(feature.properties['DESKEL u_6']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DESKEL u_7'] !== null ? autolinker.link(String(feature.properties['DESKEL u_7']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DESKEL u_8'] !== null ? autolinker.link(String(feature.properties['DESKEL u_8']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_BatasAdministratif_Bekasi_2_0(feature) {
+            switch(String(feature.properties['KECAMATAN'])) {
+                case 'BABELAN':
+                    return {
+                pane: 'pane_BatasAdministratif_Bekasi_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(48,18,59,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'BANTARGEBANG':
+                    return {
+                pane: 'pane_BatasAdministratif_Bekasi_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(56,40,111,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'BEKASI BARAT':
+                    return {
+                pane: 'pane_BatasAdministratif_Bekasi_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(63,61,154,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'BEKASI SELATAN':
+                    return {
+                pane: 'pane_BatasAdministratif_Bekasi_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(68,81,191,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'BEKASI TIMUR':
+                    return {
+                pane: 'pane_BatasAdministratif_Bekasi_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(70,101,219,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'BEKASI UTARA':
+                    return {
+                pane: 'pane_BatasAdministratif_Bekasi_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(71,119,239,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'BOJONGMANGU':
+                    return {
+                pane: 'pane_BatasAdministratif_Bekasi_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(69,138,252,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'CABANGBUNGIN':
+                    return {
+                pane: 'pane_BatasAdministratif_Bekasi_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(62,156,254,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'CIBARUSAH':
+                    return {
+                pane: 'pane_BatasAdministratif_Bekasi_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(50,174,246,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'CIBITUNG':
+                    return {
+                pane: 'pane_BatasAdministratif_Bekasi_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(37,192,231,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'CIKARANG BARAT':
+                    return {
+                pane: 'pane_BatasAdministratif_Bekasi_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(27,208,213,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'CIKARANG PUSAT':
+                    return {
+                pane: 'pane_BatasAdministratif_Bekasi_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(24,221,193,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'CIKARANG SELATAN':
+                    return {
+                pane: 'pane_BatasAdministratif_Bekasi_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(31,233,176,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'CIKARANG TIMUR':
+                    return {
+                pane: 'pane_BatasAdministratif_Bekasi_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(47,241,155,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'CIKARANG UTARA':
+                    return {
+                pane: 'pane_BatasAdministratif_Bekasi_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(72,248,130,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'JATIASIH':
+                    return {
+                pane: 'pane_BatasAdministratif_Bekasi_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(100,253,106,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'JATISAMPURNA':
+                    return {
+                pane: 'pane_BatasAdministratif_Bekasi_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(128,255,83,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'KARANGBAHAGIA':
+                    return {
+                pane: 'pane_BatasAdministratif_Bekasi_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(154,254,65,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'KEDUNGWARINGIN':
+                    return {
+                pane: 'pane_BatasAdministratif_Bekasi_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(174,250,55,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'MEDAN SATRIA':
+                    return {
+                pane: 'pane_BatasAdministratif_Bekasi_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(193,243,52,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'MUARA GEMBONG':
+                    return {
+                pane: 'pane_BatasAdministratif_Bekasi_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(211,232,53,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'MUSTIKAJAYA':
+                    return {
+                pane: 'pane_BatasAdministratif_Bekasi_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(226,220,56,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'PEBAYURAN':
+                    return {
+                pane: 'pane_BatasAdministratif_Bekasi_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(239,205,58,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'PONDOKGEDE':
+                    return {
+                pane: 'pane_BatasAdministratif_Bekasi_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(248,190,57,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'PONDOKMELATI':
+                    return {
+                pane: 'pane_BatasAdministratif_Bekasi_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(253,173,52,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RAWALUMBU':
+                    return {
+                pane: 'pane_BatasAdministratif_Bekasi_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,153,44,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'SERANG BARU':
+                    return {
+                pane: 'pane_BatasAdministratif_Bekasi_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,131,35,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'SETU':
+                    return {
+                pane: 'pane_BatasAdministratif_Bekasi_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(247,110,26,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'SUKAKARYA':
+                    return {
+                pane: 'pane_BatasAdministratif_Bekasi_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(239,89,17,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'SUKATANI':
+                    return {
+                pane: 'pane_BatasAdministratif_Bekasi_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(229,71,11,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'SUKAWANGI':
+                    return {
+                pane: 'pane_BatasAdministratif_Bekasi_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(217,56,7,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'TAMBELANG':
+                    return {
+                pane: 'pane_BatasAdministratif_Bekasi_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(203,42,4,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'TAMBUN SELATAN':
+                    return {
+                pane: 'pane_BatasAdministratif_Bekasi_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(185,30,2,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'TAMBUN UTARA':
+                    return {
+                pane: 'pane_BatasAdministratif_Bekasi_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(166,20,1,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'TARUMAJAYA':
+                    return {
+                pane: 'pane_BatasAdministratif_Bekasi_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(143,10,1,1.0)',
+                interactive: true,
+            }
+                    break;
+                default:
+                    return {
+                pane: 'pane_BatasAdministratif_Bekasi_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(122,4,3,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_BatasAdministratif_Bekasi_2');
+        map.getPane('pane_BatasAdministratif_Bekasi_2').style.zIndex = 402;
+        map.getPane('pane_BatasAdministratif_Bekasi_2').style['mix-blend-mode'] = 'normal';
+        var layer_BatasAdministratif_Bekasi_2 = new L.geoJson(json_BatasAdministratif_Bekasi_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_BatasAdministratif_Bekasi_2',
+            layerName: 'layer_BatasAdministratif_Bekasi_2',
+            pane: 'pane_BatasAdministratif_Bekasi_2',
+            onEachFeature: pop_BatasAdministratif_Bekasi_2,
+            style: style_BatasAdministratif_Bekasi_2_0,
+        });
+          function pop_LokasiMallBekasi_3(feature, layer) {
+   var popupContent = `
+<div style="width:280px; border-radius:12px; box-shadow:0 4px 8px rgba(0,0,0,0.2); overflow:hidden; font-family:sans-serif; background:#fff;">
+  <img src="${feature.properties.Foto}" style="width:100%; height:auto; max-height:160px; object-fit:cover;">
+  <div style="padding:10px; display:flex; flex-direction:column; justify-content:space-between;">
+    <div>
+      <h3 style="margin:0 0 5px 0; font-size:16px; font-weight:600;">${feature.properties.Nama_Mall}</h3>
+      <p style="margin:0 0 8px 0; font-size:13px; color:#555; line-height:1.3;">
+        ${feature.properties.Jalan}, ${feature.properties.Kecamatan}, ${feature.properties.Kota}, ${feature.properties["Kabupaten/Kota"]}, ${feature.properties.Provinsi}
+      </p>
+      <p style="margin:0; font-size:13px; color:#333;">
+        Koordinat: ${feature.properties.X}, ${feature.properties.Y}
+      </p>
+    </div>
+    <a href="https://www.google.com/maps?q=${feature.properties.Y},${feature.properties.X}" target="_blank"
+       style="display:block; text-align:center; margin-top:8px; padding:8px; font-size:13px; font-weight:600; color:white; background:#007BFF; text-decoration:none; border-radius:6px;">
+      Lihat di Peta
+    </a>
+  </div>
+</div>
+`;
+layer.bindPopup(popupContent);
+        }
+
+        function style_LokasiMallBekasi_3_0() {
+            return {
+                pane: 'pane_LokasiMallBekasi_3',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/LokasiMallBekasi_3.svg',
+            iconSize: [38.0, 38.0]
+        }),
+                interactive: true,
+            }
+        }
+        map.createPane('pane_LokasiMallBekasi_3');
+        map.getPane('pane_LokasiMallBekasi_3').style.zIndex = 403;
+        map.getPane('pane_LokasiMallBekasi_3').style['mix-blend-mode'] = 'normal';
+        var layer_LokasiMallBekasi_3 = new L.geoJson(json_LokasiMallBekasi_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_LokasiMallBekasi_3',
+            layerName: 'layer_LokasiMallBekasi_3',
+            pane: 'pane_LokasiMallBekasi_3',
+            onEachFeature: pop_LokasiMallBekasi_3,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.marker(latlng, style_LokasiMallBekasi_3_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_LokasiMallBekasi_3);
+        map.addLayer(layer_LokasiMallBekasi_3);
+        setBounds();
+        </script>
+    </body>
+</html>
