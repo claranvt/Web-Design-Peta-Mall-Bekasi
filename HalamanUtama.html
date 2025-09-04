@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entertainment Shopping Map</title>
+
+  <!-- File CSS-->
+    <link rel="stylesheet" href="../CSS/Background.css"> 
+    <link rel="stylesheet" href="../CSS/Navigasi.css"> 
+    <link rel="stylesheet" href="../CSS/Contact.css"> 
+    <link rel="stylesheet" href="../CSS/ShoppingCenterVid.css">
+    <link rel="stylesheet" href="../CSS/About.css">  
+    <link rel="stylesheet" href="../CSS/Map.css"> 
+    <link rel="stylesheet" href="../CSS/Artikel.css"> 
+    <link rel="stylesheet" href="../CSS/Rating.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+
+<!-- Google Font-->
+    <link href="https://fonts.googleapis.com/css2?family=Nosifer&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bungee+Spice&display=swap" rel="stylesheet">
+    
+
+<!-- Library Three.js dan Vanta.js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js"></script>
+    <script src="../../JAVASCRIPT/Background.js"></script>
+
+</head>
+
+<body>
+    <header>
+<!--Navigasi-->
+    <section class="nav">
+    <div class="nav-buttons">
+        <a href="#Home">Home </a>
+        <a href="#about">About</a>
+        <a href="../QGIS/Peta-Mall-Bekasi/index.html">Map</a>
+        <a href="#contact">Contact</a>
+    </div>
+  </section>  
+    
+<!--Welcome-->
+     <!-- Welcome -->
+    <section class="title" id="Home">
+      <div class="title-content">
+        <h1 class="gradient-text">WELCOME TO ENTERTAINMENT SHOPPING MAP</h1>
+        <button class="explore" id="exploreBtn">EXPLORE</button>
+      </div>
+      <div class="hero-logo">
+        <img src="../Image/LogoMBC.png" alt="MBC Lab Logo" class="left-logo" />
+        <img src="../Image/Logo GIS.png" alt="GIS Logo" class="right-logo" />
+      </div>
+    </section>
+  </header>
+
+  <!-- About -->
+  <section class="about" id="about">
+    <div class="logo-container-about"></div>
+    <h2><span>ABOUT</span> PLATFORM</h2>
+    <p class="p1">
+      This platform is designed to help you discover various shopping centers across West Java.
+      Through an interactive map, you can easily view mall locations, access complete addresses,
+      and find other essential information.
+    </p>
+    <p class="p2">
+      We believe shopping should be an enjoyable experience, not a confusing one.
+      That’s why we bring together location data, brief descriptions, and navigation routes all in one convenient place.
+    </p>
+  </section>
+
+  <!-- ShoppingCenterVideo -->
+  <section id="shopping" class="shopping">
+    <div class="logo-container-shop">
+      <video class="logo-shop" autoplay loop controls muted playsinline>
+        <source src="../Image/VideoHalamanUtama.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </section>
+
+  <!-- FindShoppingCenter -->
+<section class="map-section">
+  <h2>Find Shopping MALL In Bekasi</h2>
+  <div class="logo-container-map">
+    <iframe 
+      src="../QGIS/Peta-Mall-Bekasi/index.html" 
+      width="70%" 
+      height="500" 
+      style="border: none; border-radius: 12px;" 
+      title="Peta Mall Bekasi"
+      loading="lazy"
+      allowfullscreen>
+    </iframe>
+  </div>
+  <button class="btn-view-map" onclick="window.open('../QGIS/Peta-Mall-Bekasi/index.html', '_blank')">
+    Lihat Map
+  </button>
+</section>
+
+
+
+<!-- ARTICLES/BLOG SECTION -->
+<section id="articles" class="articles-section">
+    <div class="title-wrapper">
+  <h2>Articles & Blogs</h2>
+  </div>
+  <div class="articles-container">
+    <article class="article-card" data-id="1">
+      <img src="../QGIS/Image/summarecon-mall-bekasi.jpg" alt="Mall Bekasi 1" />
+      <h3>8 Pilihan Mall di Bekasi, Cocok untuk Belanja dan Rekreasi</h3>
+      <p>Daftar mall di Bekasi yang cocok untuk belanja dan rekreasi, seperti Mall Metropolitan, Revo Town, Grand Galaxy Park Mall, Grand Metropolitan Bekasi, Plaza Pondok Gede, Summarecon Mall Bekasi, dan lainnya.</p>
+      <button class="read-more-btn">Baca Selengkapnya</button>
+    </article>
+    <article class="article-card" data-id="2">
+      <img src="../QGIS/Image/Living-World-GW.jpeg" alt="Mall Bekasi 2" />
+      <h3>Kasta Mal Paling Nyaman untuk Belanja dan Nongkrong di Bekasi</h3>
+      <p>Artikel dari Mojok menyajikan ulasan tentang mall-mall di Bekasi yang nyaman untuk berbelanja dan nongkrong. Berikut adalah beberapa mall yang disebutkan dalam artikel tersebut:</p>
+      <button class="read-more-btn">Baca Selengkapnya</button>
+    </article>
+    <article class="article-card" data-id="3">
+      <img src="../QGIS/Image/Aeon-Mall.jpg" alt="Mall Bekasi 3" />
+      <h3>Cari Tempat Nongkrong di Bekasi? 5 Mall Ini Paling Nyaman & Hits</h3>
+      <p>Bingung mencari tempat nongkrong di Bekasi? Temukan 5 mall paling nyaman dan hits yang cocok untuk belanja, kuliner, dan bersantai bersama teman atau keluarga. Dari suasana cozy hingga fasilitas lengkap.</p>
+      <button class="read-more-btn">Baca Selengkapnya</button>
+    </article>
+  </div>
+</section>
+
+<!-- Modal Artikel -->
+<div id="articleModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn">&times;</span>
+    <h2 id="modalTitle"></h2>
+    <img id="modalImage" src="" alt="" />
+    <p id="modalContent"></p>
+  </div>
+</div>
+
+
+<!-- REVIEW & RATING SECTION -->
+<section id="reviews" class="reviews-section">
+  <h2>Ulasan dan Rating</h2>
+  <div class="rating-input">
+    <span class="star" data-value="1">&#9733;</span>
+    <span class="star" data-value="2">&#9733;</span>
+    <span class="star" data-value="3">&#9733;</span>
+    <span class="star" data-value="4">&#9733;</span>
+    <span class="star" data-value="5">&#9733;</span>
+  </div>
+  <textarea id="comment" placeholder="Tulis ulasan Anda di sini..." rows="4"></textarea>
+  <button id="submitReview">Kirim Ulasan</button>
+
+  <h3>Ulasan Pengguna</h3>
+  <div id="reviewsList" class="reviews-list">
+    <!-- Ulasan akan muncul di sini -->
+  </div>
+</section>
+
+  <!-- Contact -->
+  <section id="contact" class="contact">
+    <h2>Contact</h2>
+    <ul>
+      <li><i class="fas fa-envelope"></i> clranvtf@gmail.com</li>
+      <li><i class="fas fa-phone"></i> +62 819 9403 1105</li>
+      <li><i class="fas fa-map-marker-alt"></i> Bandung, Indonesia</li>
+      <br />
+      <li><a href="https://www.instagram.com/claranvtf/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+      <li><a href="https://github.com/claranvt" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+      <li><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+      <li><a href="https://clrxs.blogspot.com/" target="_blank" rel="noopener noreferrer">Blogspot</a></li>
+      <li><a href="https://youtube.com" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+    </ul>
+  </section>
+
+  <script>
+    // Smooth scroll for Explore button
+    document.getElementById('exploreBtn').addEventListener('click', () => {
+      document.getElementById('shopping').scrollIntoView({ behavior: 'smooth' });
+    });
+  </script>
+</body>
+
+
